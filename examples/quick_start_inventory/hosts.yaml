@@ -1,0 +1,9 @@
+xray_server:
+  hosts:
+    quick: # variables related to this host are placed in host_vars/quick/ directory
+      ansible_host: 192.168.0.12 # replace with your server ip address
+  vars:
+    ansible_user: user # Replace with a user that ansible should access your server as 
+    ansible_become_pass: '{{ vault.ansible_become_pass }}' # Update corresponding variable in vault.yaml
+    # ansible_ssh_pass: '{{ vault.ansible_ssh_pass }}' # Uncomment and update corresponding variable in vault.yaml, 
+                                                       # if poassword ssh auth should be used instead of a key

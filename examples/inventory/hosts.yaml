@@ -1,0 +1,7 @@
+xray_server:
+  hosts:
+    my_host: # variables related to this host are placed in host_vars/my_host/ directory
+      ansible_host: 192.168.0.12
+  vars:
+    ansible_user: user
+    ansible_become_pass: '{{ vault.ansible_become_pass }}'

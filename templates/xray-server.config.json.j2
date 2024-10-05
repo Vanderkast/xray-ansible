@@ -1,0 +1,64 @@
+{
+  "log": {
+    "loglevel": "{{ xray.server.log_level | default('info') }}"
+  },
+  "routing": {
+    "rules": [],
+    "domainStrategy": "AsIs"
+  },
+  "inbounds": [
+    {
+      "port": {{ xray.server.port | default(443) }},
+      "protocol": "vless",
+      "tag": "vless_tls",
+      "settings": {
+        "clients": [
+          {% for client_name, client_details in xray.clients.items() %}
+          {
+            "id": "{{ client_details.uuid }}",
+            "email": "{{ client_details.email | default('user@nowhere.net')}}",
+            "flow": "xtls-rprx-vision"
+          }{% if not loop.last %},{% endif %}
+          {% endfor %}
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "show": false,
+          "dest": "{{ xray.server.sni.domain }}:{{ xray.server.sni.port | default(443)}}",
+          "xver": 0,
+          "serverNames": [
+            "{{ xray.server.sni.domain }}"
+          ],
+          "privateKey": "{{ xray.server.private_key }}",
+          "minClientVer": "",
+          "maxClientVer": "",
+          "maxTimeDiff": 0,
+          "shortIds": [
+            "{{ xray.server.sid }}"
+          ]
+        }
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ]
+}

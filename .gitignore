@@ -1,0 +1,10 @@
+.idea/*
+*.iml
+
+.vscode/
+
+venv/
+__pycache__
+
+.vaultpassword
+.password

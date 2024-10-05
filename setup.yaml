@@ -1,0 +1,48 @@
+---
+- name: Setup Xray server
+  hosts: xray_server
+  vars:
+    installation_script_url: https://github.com/XTLS/Xray-install/raw/main/install-release.sh
+    xray__version: ''
+    xray__exec: /usr/local/bin/xray
+    xray__config_dir: /usr/local/etc/xray
+    xray__config: '{{ xray__config_dir }}/config.json'
+    xray__private_key: '{{ xray.server.private_key }}'
+    xray__public_key: '{{ xray.server.public_key }}'
+    xray__sid: '{{ xray.server.sid }}'
+
+  tasks:
+    - name: Install curl
+      become: true
+      ansible.builtin.apt:
+        name: curl
+        update_cache: true
+        state: present
+
+    - name: Install unzip
+      become: true
+      ansible.builtin.apt:
+        name: unzip
+        update_cache: true
+        state: present
+
+    - name: Install xray
+      become: true
+      ansible.builtin.shell:
+        cmd: 'bash -c "$(curl -L {{ installation_script_url }})" @ install {{ xray__version }}'
+        creates: '{{ xray__exec }}'
+
+    - name: Template xray configuration
+      become: true
+      ansible.builtin.template:
+        src: templates/xray-server.config.json.j2
+        dest: '{{ xray__config }}'
+      register: reg__xray__config
+
+    - name: Run xray service
+      become: true
+      ansible.builtin.systemd_service:
+        name: 'xray'
+        enabled: true
+        state: restarted
+      when: reg__xray__config.changed

@@ -1,0 +1,14 @@
+xray:
+  clients:
+    my_client: 
+      email: user@nowhere.net
+      uuid: '{{ vault.xray.clients.my_client.uuid }}'
+  server:
+    port: 443
+    sni:
+      domain: www.somedomain.net # Replace with a domain name, that your Xray server will refer to, if client hello fails
+                                 # See https://github.com/XTLS/Xray-examples/blob/main/VLESS-TCP-XTLS-Vision-REALITY/REALITY.ENG.md
+      port: 443
+    private_key: '{{ vault.xray.server.private_key }}' # Can be left untouched
+    public_key: '{{ vault.xray.server.public_key}}' # Can be left untouched
+    sid: '{{ vault.xray.server.sid }}' # Can be left untouched

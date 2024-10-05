@@ -1,0 +1,11 @@
+vault:
+  # ansible_ssh_pass: Qwerty78 # Uncomment and replace with ssh password, if poassword ssh auth should be used instead of a key
+  ansible_become_pass: Qwerty78 # Replace with a password that should be used for privilege escalation
+  xray:
+    clients:
+      quick_client:
+        uuid: <quick_client:uuid> # Will be replaced by secrets_generator tool
+    server:
+      private_key: <quick_server:private_key> # Will be replaced by secrets_generator tool
+      public_key: <quick_client:public_key> # Will be replaced by secrets_generator tool
+      sid: <quick_client:uuid> # Will be replaced by secrets_generator tool

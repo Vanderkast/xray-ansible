@@ -1,0 +1,9 @@
+vault:
+  xray:
+    clients:
+      example_client: 
+        uuid: <client_context:uuid>
+    server:
+      private_key: <server_context:private_key>
+      public_key: <server_context:public_key>
+      sid: <server_context:sid>

@@ -1,0 +1,9 @@
+vault:
+  xray:
+    clients:
+      example_client:
+        uuid: 08a35197-941f-4912-88cd-e6bde63b5e6e
+    server:
+      private_key: gGKVB9DJhAE4tksg70AQ6LrZEaX0-Z20R40qV5p-zVs=
+      public_key: vlOD-4TqYgnrxy8YVbFe0JgrJH0IsTnflUipbeAW0X4=
+      sid: d308dd5a0d7966c2

@@ -1,0 +1,13 @@
+xray:
+  clients:
+    my_client: 
+      email: user@nowhere.net
+      uuid: '{{ vault.xray.clients.my_client.uuid }}' # variable references with "vault" prefix are taken from the vault (vault.yaml)
+  server:
+    port: 443
+    sni:
+      domain: www.somedomain.net
+      port: 443
+    private_key: '{{ vault.xray.server.private_key }}'
+    public_key: '{{ vault.xray.server.public_key}}'
+    sid: '{{ vault.xray.server.sid }}'
