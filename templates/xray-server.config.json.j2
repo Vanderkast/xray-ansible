@@ -16,7 +16,7 @@
           {% for client_name, client_details in xray.clients.items() %}
           {
             "id": "{{ client_details.uuid }}",
-            "email": "{{ client_details.email | default('user@nowhere.net')}}",
+            "email": "{{ client_details.email | default('user{0:d}@nowhere.net'.format(loop.index))}}",
             "flow": "xtls-rprx-vision"
           }{% if not loop.last %},{% endif %}
           {% endfor %}

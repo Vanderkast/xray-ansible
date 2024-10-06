@@ -31,9 +31,10 @@ prepare_server () {
     cp -r /root/.ssh/authorized_keys $USER_SSH_DIR
     chown -R $USERNAME:$USERNAME $USER_SSH_DIR
 
-    # Disable password auth
-    sed -n -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-    sed -n -i 's/#PermitEmptyPasswords yes/PermitEmptyPasswords no/' /etc/ssh/sshd_config
+    # Update ssg settings
+    sed -i 's/#\?PasswordAuthentication \(yes\|no\)/PasswordAuthentication no/' /etc/ssh/sshd_config
+    sed -i 's/#\?PermitEmptyPasswords \(yes\|no\)/PermitEmptyPasswords no/' /etc/ssh/sshd_config
+    sed -i 's/#\?PermitRootLogin \(yes\|no\)/PermitRootLogin no/' /etc/ssh/sshd_config
 
     # Restart ssh deamon
     systemctl restart sshd
